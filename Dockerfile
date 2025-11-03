@@ -32,6 +32,9 @@ RUN R -e "tinytex::install_tinytex()" \
 # A few common LaTeX packages to avoid .sty errors
 RUN R -e "tinytex::tlmgr_install(c('booktabs', 'caption', 'threeparttable', 'multirow', 'colortbl', 'xcolor'))"
 
+# Alias for knitting .Rnw files
+RUN echo "alias knit='f(){ Rscript -e \"knitr::knit(\\\"\$1\\\")\" && Rscript -e \"tinytex::latexmk(\\\"\${1%.Rnw}.tex\\\", engine=\\\"xelatex\\\")\"; }; f'" >> /root/.bashrc
+
 WORKDIR /home/project
 
 # Drop into shell
