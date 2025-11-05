@@ -17,23 +17,18 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libharfbuzz-dev \
     libfribidi-dev \
+# latex tools
+    latexmk \
+    texlive-latex-extra \
 # tidy up
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # R packages for document building
-RUN R -e "install.packages(c('knitr', 'rmarkdown', 'tinytex'), repos='https://cran.rstudio.com')"
-
-# Install TinyTeX and configure mirrors
-RUN R -e "tinytex::install_tinytex()" \
- && /root/.TinyTeX/bin/x86_64-linux/tlmgr option repository https://mirror.ctan.org/systems/texlive/tlnet \
- && /root/.TinyTeX/bin/x86_64-linux/tlmgr update --self
-
-# A few common LaTeX packages to avoid .sty errors
-RUN R -e "tinytex::tlmgr_install(c('booktabs', 'caption', 'threeparttable', 'multirow', 'colortbl', 'xcolor'))"
+RUN R -e "install.packages(c('knitr', 'rmarkdown'), repos='https://cran.rstudio.com')"
 
 # Alias for knitting .Rnw files
-RUN echo "alias knit='f(){ Rscript -e \"knitr::knit(\\\"\$1\\\")\" && Rscript -e \"tinytex::latexmk(\\\"\${1%.Rnw}.tex\\\", engine=\\\"xelatex\\\")\"; }; f'" >> /root/.bashrc
+RUN echo "alias knit='f(){ Rscript -e \"knitr::knit(\\\"\$1\\\")\" && latexmk -pdf \${1%.Rnw}.tex; }; f'" >> /root/.bashrc
 
 WORKDIR /home/project
 
