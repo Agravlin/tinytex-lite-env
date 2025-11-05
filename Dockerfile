@@ -24,8 +24,9 @@ RUN apt-get update && apt-get install -y \
     && update-ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# R packages for document building
-RUN R -e "install.packages(c('knitr', 'rmarkdown'), repos='https://cran.rstudio.com')"
+# Install R packages 
+COPY packages.R /tmp/packages.R
+RUN Rscript /tmp/packages.R && rm /tmp/packages.R
 
 # Alias for knitting .Rnw files
 RUN echo "alias knit='f(){ Rscript -e \"knitr::knit(\\\"\$1\\\")\" && latexmk -pdf \${1%.Rnw}.tex; }; f'" >> /root/.bashrc
