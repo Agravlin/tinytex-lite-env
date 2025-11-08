@@ -7,7 +7,9 @@ pkgs <- c(
   "remotes",
   "RColorBrewer",
   "tableone",
-  "xtable"
+  "xtable",
+  "ggplot2",
+  "readxl"
 )
 
 install.packages(pkgs, repos = "https://cran.rstudio.com")
