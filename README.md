@@ -29,6 +29,8 @@ You only need:
         agravlin/tinytex-lite-env:latest
     ```
 
+    The `-v "$PWD":/home/project` part mounts your current directory into the container, so the container can read and write your files in this directory. This is normally safe and convenient. If you however want full isolation see [Optional: Extra Isolation](#optional-extra-isolation).
+
     The first run may take a few minutes to download the image.
 
 4. Now you can build your files using the environment inside the container. You can try the followings:
@@ -77,8 +79,6 @@ For other problems, you can open an issue [here](https://github.com/Agravlin/tin
 ---
 
 ## Optional: Extra Isolation
-
-The setup step in step 3 mounts your current folder into the container so it can read and write your files. This is normally safe and convenient.
 
 If you prefer maximum isolation, you can start the container without mounting your folder:
 
