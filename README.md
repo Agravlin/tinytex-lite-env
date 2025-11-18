@@ -24,7 +24,7 @@ You only need:
 3. Run the container by typing
 
     ```bash
-    docker run -it \
+    docker run -it --rm \
         --name tinytex \
         -v "$PWD":/home/project \
         agravlin/tinytex-lite-env:latest
@@ -84,7 +84,7 @@ For other problems, you can open an issue [here](https://github.com/Agravlin/tin
 If you prefer maximum isolation, you can start the container without mounting your folder:
 
 ```bash
-docker run -it --name tinytex agravlin/tinytex-lite-env:latest
+docker run -it --rm --name tinytex agravlin/tinytex-lite-env:latest
 ```
 
 Then you need to copy files manually:
